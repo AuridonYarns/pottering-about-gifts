@@ -1,0 +1,9 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/"
+  to = "/.netlify/functions/gift"
+  status = 200
+  force = true

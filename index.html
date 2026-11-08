@@ -10,6 +10,8 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e231a;--bg2:#143327;--card:#183a2c;--ink:#fbf3df;--sub:#b9c9a8;--leaf:#5fb374;--leaf2:#3f8d53;--gold:#ffd77a;--line:#2d5a43;--shadow:rgba(0,0,0,.4);color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#0e231a;--bg2:#143327;--card:#183a2c;--ink:#fbf3df;--sub:#b9c9a8;--leaf:#5fb374;--leaf2:#3f8d53;--gold:#ffd77a;--line:#2d5a43;--shadow:rgba(0,0,0,.4);color-scheme:dark}
 *{box-sizing:border-box}
+.cardimg{width:100%;border-radius:14px;display:block;margin:4px 0 10px}
+[hidden]{display:none!important}
 body{margin:0;min-height:100vh;background:radial-gradient(120% 70% at 50% 0%,var(--bg2),var(--bg) 70%);color:var(--ink);font-family:'Mali',system-ui,sans-serif;padding-block:28px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;align-items:center;gap:18px}
 .brand{font-family:'Caveat',cursive;font-size:26px;color:var(--sub)}
 .card{width:100%;max-width:400px;background:var(--card);border:2px solid var(--line);border-radius:26px;box-shadow:0 14px 34px var(--shadow);padding:26px 22px 24px;text-align:center;position:relative}
@@ -55,6 +57,7 @@ if(APP_STORE_URL){$('store').innerHTML='Do not have the game yet? <a href="'+APP
 if(!code){t($('h'),'Pottering About');t($('p'),'A cosy foraging and gardening game. Ask a friend for a gift link.');$('c').hidden=true;$('go').hidden=true;document.querySelector('.store:last-child').hidden=true}
 else{
   t($('code'),code);$('go').href='potteringabout://gift?g='+code;
+  var im=new Image();im.alt='';im.className='cardimg';im.onload=function(){var v=document.querySelector('svg.pic');if(v)v.replaceWith(im)};im.src=SB_URL+'/storage/v1/object/public/gift-img/'+code+'.jpg';
   fetch(SB_URL+'/rest/v1/rpc/pa_gift_get',{method:'POST',headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({p_code:code})})
    .then(function(r){return r.json()}).then(function(g){
      if(!g){t($('h'),'This gift has gone stale');t($('p'),'The link does not seem to exist any more.');$('c').hidden=true;$('go').hidden=true;return}
